@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// Dev server proxies /api to FastAPI, so the browser talks to one origin.
 export default defineConfig({
   plugins: [react()],
   server: {

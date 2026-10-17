@@ -5,17 +5,13 @@ export const ZONES = {
   client_zone: { label: 'Зона клиента', color: '#06b6d4', hint: 'место клиента у окна' },
 }
 
-// Click on a still frame of the uploaded video to outline zones.
-// Points are stored normalized (0..1), the same format the API expects.
 export default function ZoneEditor({ videoUrl, zones, onChange }) {
   const videoRef = useRef(null)
   const canvasRef = useRef(null)
   const [active, setActive] = useState('cash_zone')
-  // loading -> frame (real video frame) | grid (browser cannot decode, e.g. HEVC .mov in Chrome)
   const [mode, setMode] = useState('loading')
   const ready = mode !== 'loading'
 
-  // Fallback if the browser never delivers a frame.
   useEffect(() => {
     setMode('loading')
     const id = setTimeout(() => setMode((m) => (m === 'loading' ? 'grid' : m)), 3000)

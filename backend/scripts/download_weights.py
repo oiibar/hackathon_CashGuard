@@ -1,8 +1,3 @@
-"""Download YOLOv8 weights once, so the service runs fully offline afterwards.
-
-    python scripts/download_weights.py            # yolov8n.pt (fast, CPU-friendly)
-    python scripts/download_weights.py yolov8s.pt # more accurate, needs GPU for 5-min budget
-"""
 from __future__ import annotations
 
 import sys

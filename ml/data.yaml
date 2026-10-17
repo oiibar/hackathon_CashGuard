@@ -1,20 +1,10 @@
-# Шаблон датасета для дообучения YOLOv8 под банковские классы.
-# Roboflow при экспорте в формате "YOLOv8" создаст такой же файл;
-# главное — чтобы имена классов совпадали с classes/watch_classes
-# в backend/config/rules.yaml.
-
-path: ./dataset          # папка из экспорта Roboflow
+path: ./dataset
 train: train/images
 val: valid/images
 test: test/images
 
 names:
-  0: cash               # наличные на столе / в руках (пачки, купюры)
-  1: cash_drawer_open   # открытый денежный ящик / сейф на рабочем месте
-  2: door_open          # открытая дверь кассового узла (кассы)
-# Новый класс (например, cash_handover — передача наличных) добавляется сюда
-# и одним правилом в rules.yaml, см. README, раздел «Как добавить нарушение».
+  0: cash
+  1: cash_drawer_open
+  2: door_open
 
-# Классы person, cell phone, handbag, backpack, suitcase уже есть в стоковой
-# yolov8n.pt (COCO). Размечать их не нужно, если кастомная модель работает
-# рядом со стоковой: MODEL_PATHS=models/yolov8n.pt,models/cash_custom.pt

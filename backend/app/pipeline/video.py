@@ -1,14 +1,3 @@
-"""Video decoding through a local ffmpeg process.
-
-Why ffmpeg and not cv2.VideoCapture for reading:
-- .mov from iPhones is often HEVC with a rotation tag; ffmpeg handles both.
-- `fps=` and `scale=` filters run inside ffmpeg with its own threads, so a
-  4K 60 fps clip is reduced to a few small frames per second before Python
-  sees it. This is the main trick that keeps a job under the 5-minute limit.
-
-The binary comes from `imageio-ffmpeg` (bundled, works offline), or from
-the system PATH, or from the FFMPEG_BINARY env var.
-"""
 from __future__ import annotations
 
 import os
@@ -32,7 +21,7 @@ def ffmpeg_exe() -> str:
         import imageio_ffmpeg
 
         return imageio_ffmpeg.get_ffmpeg_exe()
-    except Exception:  # pragma: no cover - fallback path
+    except Exception:
         found = shutil.which("ffmpeg")
         if not found:
             raise RuntimeError("ffmpeg not found: pip install imageio-ffmpeg or install ffmpeg")
@@ -54,7 +43,6 @@ _ROTATE_RE = re.compile(r"(?:rotate\s*:\s*|rotation of\s*)(-?\d+(?:\.\d+)?)")
 
 
 def probe(path: Path) -> VideoInfo:
-    """Read duration, fps and display size. ffmpeg first, OpenCV as fallback."""
     proc = subprocess.run(
         [ffmpeg_exe(), "-hide_banner", "-i", str(path)],
         capture_output=True,
@@ -94,7 +82,6 @@ def probe(path: Path) -> VideoInfo:
 
 
 def iter_frames(path: Path, sample_fps: float, out_width: int, info: VideoInfo) -> Iterator[tuple[float, np.ndarray]]:
-    """Yield (timecode_sec, BGR frame) at `sample_fps`, scaled to `out_width`."""
     out_w = min(out_width, info.width)
     out_w -= out_w % 2
     out_h = int(round(info.height * out_w / info.width))
@@ -108,8 +95,6 @@ def iter_frames(path: Path, sample_fps: float, out_width: int, info: VideoInfo) 
         "-vf", f"fps={sample_fps:.4f},scale={out_w}:{out_h}",
         "-pix_fmt", "bgr24", "-f", "rawvideo", "pipe:1",
     ]
-    # stderr goes to a temp file: a PIPE could fill up on a damaged file and
-    # deadlock the reader.
     with tempfile.TemporaryFile() as err_file:
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=err_file, bufsize=frame_bytes * 4)
         try:

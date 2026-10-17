@@ -3,7 +3,8 @@ import sys
 import tempfile
 from pathlib import Path
 
-# Isolated data dir and a known key, set before the app modules import settings.
-os.environ.setdefault("DATA_DIR", tempfile.mkdtemp(prefix="cashguard-test-"))
-os.environ.setdefault("API_KEY", "test-key")
+os.environ["DATA_DIR"] = tempfile.mkdtemp(prefix="cashguard-test-")
+os.environ["API_KEY"] = "test-key"
+os.environ["AUTO_RETRAIN"] = "false"
+os.environ.pop("DATABASE_URL", None)
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))

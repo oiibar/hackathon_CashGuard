@@ -5,9 +5,38 @@ services:
       - "8000:8000"
     environment:
       API_KEY: ${API_KEY:-change-me}
-      # MODEL_PATHS: /app/backend/models/yolov8n.pt,/app/backend/models/cash_custom.pt
-      # DEVICE: "0"   # GPU, needs the NVIDIA runtime and a CUDA build of torch
+      DATABASE_URL: postgresql://cashguard:${POSTGRES_PASSWORD:-cashguard}@db:5432/cashguard
+      LEARNING_ENABLED: ${LEARNING_ENABLED:-true}
+      AUTO_RETRAIN: ${AUTO_RETRAIN:-true}
+      RETRAIN_MIN_REVIEWS: ${RETRAIN_MIN_REVIEWS:-3}
     volumes:
       - ./data:/app/data
-      # - ./backend/models:/app/backend/models   # подключите, чтобы подставить свою модель без пересборки
+    depends_on:
+      db:
+        condition: service_healthy
     restart: unless-stopped
+
+  db:
+    image: postgres:16.4-alpine
+    environment:
+      POSTGRES_DB: cashguard
+      POSTGRES_USER: cashguard
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cashguard}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cashguard -d cashguard"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  tunnel:
+    image: cloudflare/cloudflared:2024.12.2
+    command: tunnel --no-autoupdate --url http://cashguard:8000
+    depends_on: [cashguard]
+    restart: unless-stopped
+    profiles: [public]
+
+volumes:
+  pgdata:

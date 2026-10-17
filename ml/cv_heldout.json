@@ -1,0 +1,254 @@
+{
+ "X-1": {
+  "max": 0.5794,
+  "violation": false,
+  "first": null,
+  "type": "second_visitor_during_service"
+ },
+ "X-2": {
+  "max": 0.6061,
+  "violation": true,
+  "first": 15.0,
+  "type": "cash_counting_hidden"
+ },
+ "Х-3": {
+  "max": 0.6765,
+  "violation": true,
+  "first": 14.0,
+  "type": null
+ },
+ "Х-4": {
+  "max": 0.8018,
+  "violation": true,
+  "first": 17.5,
+  "type": "outsider_entered"
+ },
+ "Х-5": {
+  "max": 0.5822,
+  "violation": false,
+  "first": null,
+  "type": null
+ },
+ "Х-8": {
+  "max": 0.717,
+  "violation": true,
+  "first": 6.0,
+  "type": null
+ },
+ "Х-10": {
+  "max": 0.526,
+  "violation": false,
+  "first": null,
+  "type": null
+ },
+ "Х-11": {
+  "max": 0.9227,
+  "violation": true,
+  "first": 13.5,
+  "type": "cash_left_open"
+ },
+ "Х-12": {
+  "max": 0.9952,
+  "violation": true,
+  "first": 24.5,
+  "type": null
+ },
+ "Х-13": {
+  "max": 0.9634,
+  "violation": true,
+  "first": 39.0,
+  "type": "cash_left_open"
+ },
+ "Х-14": {
+  "max": 0.9143,
+  "violation": true,
+  "first": 0.0,
+  "type": null
+ },
+ "Х-15": {
+  "max": 0.9188,
+  "violation": true,
+  "first": 10.0,
+  "type": "workplace_left_open"
+ },
+ "Х-16": {
+  "max": 0.5226,
+  "violation": false,
+  "first": null,
+  "type": null
+ },
+ "Х-17": {
+  "max": 0.7309,
+  "violation": true,
+  "first": 5.5,
+  "type": "second_visitor_during_service"
+ },
+ "Х-18": {
+  "max": 0.7071,
+  "violation": true,
+  "first": 7.0,
+  "type": "cash_counting_hidden"
+ },
+ "Х-19": {
+  "max": 0.796,
+  "violation": true,
+  "first": 5.0,
+  "type": null
+ },
+ "Х-20": {
+  "max": 0.8408,
+  "violation": true,
+  "first": 0.0,
+  "type": "personal_items_in_cash_zone"
+ },
+ "Х-21": {
+  "max": 0.92,
+  "violation": true,
+  "first": 0.0,
+  "type": null
+ },
+ "Х-22": {
+  "max": 0.9251,
+  "violation": true,
+  "first": 9.5,
+  "type": "cash_left_open"
+ },
+ "Х-23": {
+  "max": 0.8231,
+  "violation": true,
+  "first": 7.0,
+  "type": null
+ },
+ "Х-24": {
+  "max": 0.7558,
+  "violation": true,
+  "first": 5.5,
+  "type": "cash_left_open"
+ },
+ "Х-25": {
+  "max": 0.8557,
+  "violation": true,
+  "first": 14.5,
+  "type": null
+ },
+ "Х-26": {
+  "max": 0.8636,
+  "violation": true,
+  "first": 11.5,
+  "type": "workplace_left_open"
+ },
+ "Х-27": {
+  "max": 0.8314,
+  "violation": true,
+  "first": 10.5,
+  "type": null
+ },
+ "Х-28": {
+  "max": 0.8997,
+  "violation": true,
+  "first": 8.5,
+  "type": "cash_left_open"
+ },
+ "Х-29": {
+  "max": 0.8247,
+  "violation": true,
+  "first": 7.5,
+  "type": null
+ },
+ "Х-30": {
+  "max": 0.6932,
+  "violation": true,
+  "first": 4.0,
+  "type": "cash_left_open"
+ },
+ "Х-31": {
+  "max": 0.906,
+  "violation": true,
+  "first": 8.0,
+  "type": null
+ },
+ "Х-32": {
+  "max": 0.8121,
+  "violation": true,
+  "first": 6.5,
+  "type": "outsider_entered"
+ },
+ "Х-33": {
+  "max": 0.908,
+  "violation": true,
+  "first": 4.5,
+  "type": "cash_door_left_open"
+ },
+ "Х-34": {
+  "max": 0.8985,
+  "violation": true,
+  "first": 4.0,
+  "type": "cash_to_pocket"
+ },
+ "Х-35": {
+  "max": 0.8165,
+  "violation": true,
+  "first": 4.5,
+  "type": null
+ },
+ "Х-37": {
+  "max": 0.7428,
+  "violation": true,
+  "first": 4.5,
+  "type": null
+ },
+ "Х-38": {
+  "max": 0.7498,
+  "violation": true,
+  "first": 10.5,
+  "type": "cash_left_open"
+ },
+ "Х-39": {
+  "max": 0.6694,
+  "violation": true,
+  "first": 4.5,
+  "type": null
+ },
+ "Х-40": {
+  "max": 0.7995,
+  "violation": true,
+  "first": 4.0,
+  "type": "safe_left_open"
+ },
+ "Х-43": {
+  "max": 0.4863,
+  "violation": false,
+  "first": null,
+  "type": null
+ },
+ "Х-44": {
+  "max": 0.622,
+  "violation": true,
+  "first": 6.5,
+  "type": "cash_door_left_open"
+ },
+ "Х-45": {
+  "max": 0.4775,
+  "violation": false,
+  "first": null,
+  "type": null
+ },
+ "Х-46": {
+  "max": 0.6477,
+  "violation": true,
+  "first": 12.5,
+  "type": "cash_door_left_open"
+ },
+ "Х-47": {
+  "max": 0.6577,
+  "violation": true,
+  "first": 18.0,
+  "type": "cashier_uses_phone"
+ },
+ "Х-48": {
+  "max": 0.6048,
+  "violation": false,
+  "first": null,
+  "type": null
+ }
+}

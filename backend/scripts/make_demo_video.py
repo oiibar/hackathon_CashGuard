@@ -1,14 +1,3 @@
-"""Build a synthetic demo .mov from the images bundled with Ultralytics.
-
-Timeline (30 s, 1280x720):
-   0-8 s   two people            -> no violation (default profile allows 2)
-   8-16 s  four+ people          -> unauthorized_person_in_cash_zone
-  16-21 s  black frames          -> camera_obstructed
-  21-30 s  two people            -> no violation
-
-Use it to test the pipeline end to end before you have real footage:
-    python scripts/make_demo_video.py data/demo.mov
-"""
 from __future__ import annotations
 
 import subprocess
@@ -51,7 +40,7 @@ def main() -> None:
     rng = np.random.default_rng(0)
     for img, seconds in timeline:
         for _ in range(seconds * FPS):
-            noise = rng.integers(-6, 7, img.shape, dtype=np.int16)  # sensor-like noise
+            noise = rng.integers(-6, 7, img.shape, dtype=np.int16)
             frame = np.clip(img.astype(np.int16) + noise, 0, 255).astype(np.uint8)
             proc.stdin.write(frame.tobytes())
     proc.stdin.close()

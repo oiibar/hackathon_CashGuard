@@ -9,3 +9,8 @@ ml/dataset/
 frontend/node_modules/
 frontend/dist/
 .DS_Store
+.env
+ml/cache/
+ml/detections/
+backend/models/clip/
+ml/videos/

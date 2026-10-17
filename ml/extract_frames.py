@@ -1,12 +1,3 @@
-"""Cut training videos into frames for labeling in Roboflow (or CVAT, Label Studio).
-
-    python ml/extract_frames.py videos/ dataset_raw/ --every 1.0
-
-Takes one frame every `--every` seconds from each video in the input folder,
-skips near-duplicates (static camera = many identical frames), and writes
-JPEGs named <video>_<seconds>.jpg. Upload the folder to Roboflow, label the
-classes from ml/data.yaml, export in "YOLOv8" format.
-"""
 from __future__ import annotations
 
 import argparse

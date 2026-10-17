@@ -1,4 +1,3 @@
-"""X-API-Key header check, shared by every /api/v1 route except health."""
 from __future__ import annotations
 
 import secrets

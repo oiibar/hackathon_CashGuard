@@ -1,7 +1,3 @@
-"""Behave like the jury: upload a video, poll the job, print a short summary.
-
-    python scripts/smoke_test.py path/to/video.mov --url http://localhost:8000 --key change-me
-"""
 from __future__ import annotations
 
 import argparse

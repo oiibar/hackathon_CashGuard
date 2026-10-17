@@ -7,3 +7,10 @@ data
 ml/runs
 ml/dataset
 .git
+.env
+ml/videos
+ml/cache
+ml/detections
+*.docx
+design.jpg
+backend/models/clip

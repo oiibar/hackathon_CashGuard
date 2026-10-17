@@ -1,4 +1,3 @@
-"""Evidence frames: draw zones and boxes, stamp the timecode, encode to base64 JPEG."""
 from __future__ import annotations
 
 import base64
@@ -9,11 +8,12 @@ import numpy as np
 from .detector import Detection
 
 ZONE_COLORS = {
-    "cash_zone": (0, 165, 255),    # orange (BGR)
-    "client_zone": (255, 200, 0),  # cyan
+    "cash_zone": (0, 165, 255),
+    "client_zone": (255, 200, 0),
+    "desk_zone": (0, 120, 200),
 }
-HIT_COLOR = (40, 40, 230)          # red: object that triggered the rule
-CTX_COLOR = (200, 200, 200)        # grey: other context objects
+HIT_COLOR = (40, 40, 230)
+CTX_COLOR = (200, 200, 200)
 
 
 def fmt_tc(sec: float) -> str:
@@ -26,6 +26,8 @@ def render(frame: np.ndarray, t: float, title: str, zones_px: dict[str, np.ndarr
     img = frame.copy()
     overlay = img.copy()
     for name, poly in zones_px.items():
+        if cv2.contourArea(poly) >= 0.95 * img.shape[0] * img.shape[1]:
+            continue
         color = ZONE_COLORS.get(name, (180, 180, 180))
         cv2.fillPoly(overlay, [poly], color)
         cv2.polylines(img, [poly], True, color, 2)
@@ -40,8 +42,6 @@ def render(frame: np.ndarray, t: float, title: str, zones_px: dict[str, np.ndarr
         cv2.putText(img, label, (x1 + 2, max(y1 - 4, th + 2)), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
                     (255, 255, 255) if color == HIT_COLOR else (20, 20, 20), 1, cv2.LINE_AA)
 
-    # Header bar. OpenCV fonts are ASCII-only, so the bar holds the rule type
-    # code and timecode; the Russian text lives in the JSON description.
     bar = f"{fmt_tc(t)}  |  {title}"
     cv2.rectangle(img, (0, 0), (img.shape[1], 30), (20, 20, 20), -1)
     cv2.putText(img, bar, (10, 21), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1, cv2.LINE_AA)

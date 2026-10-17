@@ -1,0 +1,107 @@
+{
+ "always": {
+  "tp": 22,
+  "fp": 20,
+  "tn": 0,
+  "fn": 0,
+  "videos": 42,
+  "positives": 22,
+  "negatives": 20,
+  "accuracy": 0.5238,
+  "precision": 0.5238,
+  "recall": 1.0,
+  "specificity": 0.0,
+  "f1": 0.6875,
+  "mcc": 0.0,
+  "timecode": {
+   "n": 0,
+   "mae_sec": null,
+   "median_sec": null,
+   "within_3s": null
+  },
+  "type": {
+   "n": 22,
+   "correct": 0,
+   "accuracy": 0.0
+  }
+ },
+ "rules": {
+  "tp": 4,
+  "fp": 4,
+  "tn": 16,
+  "fn": 18,
+  "videos": 42,
+  "positives": 22,
+  "negatives": 20,
+  "accuracy": 0.4762,
+  "precision": 0.5,
+  "recall": 0.1818,
+  "specificity": 0.8,
+  "f1": 0.2667,
+  "mcc": -0.0231,
+  "timecode": {
+   "n": 4,
+   "mae_sec": 3.38,
+   "median_sec": 2.5,
+   "within_3s": 0.5
+  },
+  "type": {
+   "n": 4,
+   "correct": 2,
+   "accuracy": 0.5
+  }
+ },
+ "model": {
+  "tp": 21,
+  "fp": 14,
+  "tn": 6,
+  "fn": 1,
+  "videos": 42,
+  "positives": 22,
+  "negatives": 20,
+  "accuracy": 0.6429,
+  "precision": 0.6,
+  "recall": 0.9545,
+  "specificity": 0.3,
+  "f1": 0.7368,
+  "mcc": 0.3411,
+  "timecode": {
+   "n": 21,
+   "mae_sec": 10.0,
+   "median_sec": 5.0,
+   "within_3s": 0.3333
+  },
+  "type": {
+   "n": 21,
+   "correct": 0,
+   "accuracy": 0.0
+  }
+ },
+ "system": {
+  "tp": 21,
+  "fp": 15,
+  "tn": 5,
+  "fn": 1,
+  "videos": 42,
+  "positives": 22,
+  "negatives": 20,
+  "accuracy": 0.619,
+  "precision": 0.5833,
+  "recall": 0.9545,
+  "specificity": 0.25,
+  "f1": 0.7241,
+  "mcc": 0.2919,
+  "timecode": {
+   "n": 21,
+   "mae_sec": 9.21,
+   "median_sec": 4.5,
+   "within_3s": 0.381
+  },
+  "type": {
+   "n": 21,
+   "correct": 2,
+   "accuracy": 0.0952
+  }
+ },
+ "generated_at": 1792268318.5565913
+}

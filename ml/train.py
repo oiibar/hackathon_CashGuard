@@ -1,11 +1,3 @@
-"""Fine-tune YOLOv8 on the labeled bank dataset and copy the weights to backend/models.
-
-    python ml/train.py --data ml/dataset/data.yaml --epochs 80 --model yolov8n.pt
-    # GPU: --device 0 ; Apple Silicon: --device mps ; CPU works but is slow
-
-Then start the backend with both models:
-    MODEL_PATHS=models/yolov8n.pt,models/cash_custom.pt uvicorn app.main:app
-"""
 from __future__ import annotations
 
 import argparse
@@ -39,8 +31,6 @@ def main() -> None:
         name=args.name,
         project=str(ROOT / "ml" / "runs"),
         patience=20,
-        # Bank cameras: fixed angle, indoor light. Mild color/brightness
-        # augmentation, no vertical flips (ceilings do not swap with floors).
         hsv_v=0.4,
         fliplr=0.5,
         flipud=0.0,

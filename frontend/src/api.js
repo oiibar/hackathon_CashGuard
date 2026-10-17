@@ -1,5 +1,3 @@
-// Thin client for the FastAPI backend. Same origin by default (Vite proxy in
-// dev, FastAPI static mount in prod); set VITE_API_BASE to point elsewhere.
 const BASE = import.meta.env.VITE_API_BASE || ''
 
 async function request(path, apiKey, init = {}) {
@@ -8,16 +6,27 @@ async function request(path, apiKey, init = {}) {
     headers: { ...(init.headers || {}), ...(apiKey ? { 'X-API-Key': apiKey } : {}) },
   })
   const body = await res.json().catch(() => ({}))
-  if (!res.ok) throw new Error(body.detail || `HTTP ${res.status}`)
+  if (!res.ok) {
+    const detail = Array.isArray(body.detail) ? body.detail.map((d) => d.msg).join('; ') : body.detail
+    throw new Error(detail || `HTTP ${res.status}`)
+  }
   return body
 }
 
-export const health = () => request('/api/v1/health')
-export const getConfig = (apiKey) => request('/api/v1/config', apiKey)
-export const getJob = (jobId, apiKey) => request(`/api/v1/jobs/${jobId}`, apiKey)
+const post = (path, apiKey, body) => request(path, apiKey, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: body ? JSON.stringify(body) : undefined,
+})
 
-// XHR instead of fetch: fetch has no upload progress events, and .mov files
-// from a phone can be hundreds of MB.
+export const health = () => request('/api/v1/health')
+export const getConfig = () => request('/api/v1/config')
+export const getJob = (jobId, apiKey) => request(`/api/v1/jobs/${jobId}`, apiKey)
+export const getModel = () => request('/api/v1/model')
+export const reviewJob = (jobId, apiKey, review) => post(`/api/v1/jobs/${jobId}/review`, apiKey, review)
+export const retrain = (apiKey) => post('/api/v1/model/retrain', apiKey)
+export const activateVersion = (id, apiKey) => post(`/api/v1/model/versions/${id}/activate`, apiKey)
+
 export function analyze(file, { apiKey, zones, profile }, onProgress) {
   return new Promise((resolve, reject) => {
     const form = new FormData()
@@ -31,7 +40,7 @@ export function analyze(file, { apiKey, zones, profile }, onProgress) {
     xhr.upload.onprogress = (e) => e.lengthComputable && onProgress?.(e.loaded / e.total)
     xhr.onload = () => {
       let body = {}
-      try { body = JSON.parse(xhr.responseText) } catch { /* not JSON */ }
+      try { body = JSON.parse(xhr.responseText) } catch { body = {} }
       if (xhr.status >= 200 && xhr.status < 300) resolve(body)
       else reject(new Error(body.detail || `HTTP ${xhr.status}`))
     }
