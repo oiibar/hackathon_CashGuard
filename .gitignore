@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+backend/data/
+data/
+backend/models/*.pt
+ml/runs/
+ml/dataset/
+frontend/node_modules/
+frontend/dist/
+.DS_Store

@@ -1,0 +1,13 @@
+services:
+  cashguard:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      API_KEY: ${API_KEY:-change-me}
+      # MODEL_PATHS: /app/backend/models/yolov8n.pt,/app/backend/models/cash_custom.pt
+      # DEVICE: "0"   # GPU, needs the NVIDIA runtime and a CUDA build of torch
+    volumes:
+      - ./data:/app/data
+      # - ./backend/models:/app/backend/models   # подключите, чтобы подставить свою модель без пересборки
+    restart: unless-stopped
