@@ -81,11 +81,31 @@ def learning_roundtrip(store):
     assert not store.activate_version(999)
 
 
+def purge_roundtrip(store):
+    old_day = time.time() - 100 * 86400
+    stale, kept, fresh = report_job(), report_job(), report_job()
+    for job in (stale, kept):
+        job.created_at = old_day
+    for job in (stale, kept, fresh):
+        finish(job)
+        store.save(job)
+    store.save_review({"job_id": kept.id, "label": "violation", "timecode_sec": 12.0, "type_id": None})
+
+    out = store.purge(time.time() - 90 * 86400)
+    assert stale.id in out["deleted"] and kept.id in out["stripped"]
+    assert fresh.id not in out["deleted"] + out["stripped"]
+    assert store.load(stale.id) is None
+    assert store.load(kept.id).result["violations"][0]["evidence_frames"] == []
+    assert any(r["job_id"] == kept.id for r in store.reviews())
+    assert len(store.load(fresh.id).result["violations"][0]["evidence_frames"]) == 2
+
+
 def test_file_store(tmp_path):
     store = FileStore(tmp_path / "jobs", Job)
     store.open()
     roundtrip(store)
     learning_roundtrip(store)
+    purge_roundtrip(store)
 
 
 @pytest.mark.skipif(not os.getenv("TEST_DATABASE_URL"), reason="TEST_DATABASE_URL not set")
@@ -102,6 +122,7 @@ def test_postgres_store(tmp_path):
     try:
         roundtrip(store)
         learning_roundtrip(store)
+        purge_roundtrip(store)
     finally:
         store.close()
         with psycopg.connect(dsn, autocommit=True) as conn:

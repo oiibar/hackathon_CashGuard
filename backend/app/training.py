@@ -9,7 +9,7 @@ from typing import Any, Iterable
 import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import average_precision_score, roc_auc_score, roc_curve
+from sklearn.metrics import average_precision_score, cohen_kappa_score, roc_auc_score, roc_curve
 from sklearn.preprocessing import StandardScaler
 
 from .pipeline.learned import Model, features, smooth
@@ -18,6 +18,8 @@ POS_BEFORE, POS_AFTER, NEG_GAP = 1.0, 2.0, 5.0
 GRID = [(k, c) for k in (8, 16, 32, 64) for c in (0.01, 0.1, 1.0)]
 OVERFIT_GAP = 0.15
 UNDERFIT_AUC = 0.65
+COST_FN, COST_FP = 10.0, 1.0
+ECE_BINS = 5
 
 
 @dataclass
@@ -166,11 +168,11 @@ def cross_validate(videos: list[Video], k: int, c: float, n_folds: int) -> list[
     return [h for h in held if h is not None]
 
 
-def pick_threshold(held: list[Scored]) -> float:
+def pick_threshold(held: list[Scored], policy: str = "mcc") -> float:
     best = None
     for thr in sorted({round(h.peak, 4) for h in held}):
         m = verdict_counts(held, thr)
-        key = (mcc(m), m["tp"], -thr)
+        key = (-cost(m), mcc(m), thr) if policy == "cost" else (mcc(m), m["tp"], -thr)
         if best is None or key > best[0]:
             best = (key, thr)
     return best[1] if best else 0.5
@@ -196,6 +198,57 @@ def mcc(m: dict[str, int]) -> float:
     return (tp * tn - fp * fn) / denom if denom else 0.0
 
 
+def cost(m: dict[str, int]) -> float:
+    return COST_FN * m["fn"] + COST_FP * m["fp"]
+
+
+def operating_points(held: list[Scored]) -> list[dict[str, Any]]:
+    out = []
+    for thr in sorted({round(h.peak, 4) for h in held}):
+        m = verdict_counts(held, thr)
+        out.append({"threshold": thr, **m, "precision": _ratio(m["tp"], m["tp"] + m["fp"]),
+                    "recall": _ratio(m["tp"], m["tp"] + m["fn"]), "f2": round(f_beta(m, 2.0), 4),
+                    "mcc": round(mcc(m), 4), "cost": cost(m)})
+    return out
+
+
+def reliability(y: np.ndarray, p: np.ndarray, bins: int = ECE_BINS) -> tuple[float, list[list[float]]]:
+    edges = np.linspace(0, 1, bins + 1)
+    rows, ece = [], 0.0
+    for lo, hi in zip(edges[:-1], edges[1:]):
+        sel = (p >= lo) & ((p < hi) if hi < 1 else (p <= hi))
+        if sel.any():
+            conf, acc = float(p[sel].mean()), float(y[sel].mean())
+            ece += sel.mean() * abs(conf - acc)
+            rows.append([round(conf, 4), round(acc, 4), int(sel.sum())])
+    return round(float(ece), 4), rows
+
+
+def platt(p: np.ndarray, y: np.ndarray) -> tuple[float, float]:
+    clf = LogisticRegression(C=100.0).fit(p.reshape(-1, 1), y)
+    return float(clf.coef_[0, 0]), float(clf.intercept_[0])
+
+
+def calibration(y: np.ndarray, p: np.ndarray) -> dict[str, Any]:
+    raw_ece, raw_bins = reliability(y, p)
+    out: dict[str, Any] = {"raw_ece": raw_ece, "raw_bins": raw_bins}
+    if len(set(y.tolist())) < 2 or len(y) < 6:
+        return out
+    loo = np.empty(len(y))
+    for i in range(len(y)):
+        keep = np.arange(len(y)) != i
+        if len(set(y[keep].tolist())) < 2:
+            return out
+        a, b = platt(p[keep], y[keep])
+        loo[i] = 1 / (1 + np.exp(-(a * p[i] + b)))
+    cal_ece, cal_bins = reliability(y, loo)
+    a, b = platt(p, y)
+    out.update({"platt_a": round(a, 4), "platt_b": round(b, 4), "calibrated_ece": cal_ece,
+                "calibrated_bins": cal_bins, "calibrated_brier": round(float(np.mean((loo - y) ** 2)), 4),
+                "applied": cal_ece < raw_ece})
+    return out
+
+
 def _ratio(a: float, b: float) -> float | None:
     return round(a / b, 4) if b else None
 
@@ -219,6 +272,7 @@ def metrics(held: list[Scored], thr: float) -> dict[str, Any]:
         "recall": _ratio(m["tp"], pos),
         "specificity": _ratio(m["tn"], neg),
         "false_positive_rate": _ratio(m["fp"], neg),
+        "false_negative_rate": _ratio(m["fn"], pos),
         "f1": round(f_beta(m, 1.0), 4),
         "f2": round(f_beta(m, 2.0), 4),
         "mcc": round(mcc(m), 4),
@@ -226,7 +280,11 @@ def metrics(held: list[Scored], thr: float) -> dict[str, Any]:
         "roc_auc": _safe(roc_auc_score, y, p),
         "pr_auc": _safe(average_precision_score, y, p),
         "brier": round(float(np.mean((p - y) ** 2)), 4) if len(y) else None,
+        "cohen_kappa": _safe(cohen_kappa_score, y, (p >= thr).astype(int)),
+        "cost": {"fn": COST_FN, "fp": COST_FP, "total": cost(m), "per_video": round(cost(m) / max(len(y), 1), 4)},
+        "operating_points": operating_points(held),
     }
+    out["calibration"] = calibration(y, p)
     if out["recall"] is not None and out["specificity"] is not None:
         out["balanced_accuracy"] = round((out["recall"] + out["specificity"]) / 2, 4)
     if pos and neg:
@@ -284,7 +342,7 @@ class TrainResult:
 
 
 def train(videos: list[Video], n_folds: int = 10, grid: list[tuple[int, float]] | None = None,
-          log=print) -> TrainResult:
+          log=print, policy: str = "mcc") -> TrainResult:
     if sum(v.positive for v in videos) < 2 or sum(not v.positive for v in videos) < 2:
         raise ValueError("need at least two videos of each class")
     started = time.time()
@@ -292,7 +350,7 @@ def train(videos: list[Video], n_folds: int = 10, grid: list[tuple[int, float]] 
     best = None
     for k, c in grid or GRID:
         held = cross_validate(videos, k, c, n_folds)
-        thr = pick_threshold(held)
+        thr = pick_threshold(held, policy)
         m = verdict_counts(held, thr)
         cv_auc = _safe(roc_auc_score, [h.video.positive for h in held], [h.peak for h in held])
         row = {"k": k, "c": c, "threshold": round(thr, 4), "mcc": round(mcc(m), 4), "f1": round(f_beta(m, 1.0), 4),
@@ -308,6 +366,8 @@ def train(videos: list[Video], n_folds: int = 10, grid: list[tuple[int, float]] 
     cv = metrics(held, thr)
     model = fit(videos, k, c)
     model.threshold = thr
+    if cv["calibration"].get("applied"):
+        model.calib = (cv["calibration"]["platt_a"], cv["calibration"]["platt_b"])
     train_m = metrics([score_video(model, v) for v in videos], thr)
     train_auc = _moment_auc(model, videos)
     cv["fit"] = {
@@ -320,7 +380,8 @@ def train(videos: list[Video], n_folds: int = 10, grid: list[tuple[int, float]] 
     }
     for row in search:
         row["selected"] = row["k"] == k and row["c"] == c
-    params = {"k": k, "c": c, "threshold": round(thr, 4), "folds": len(folds(videos, n_folds)),
+    params = {"k": k, "c": c, "threshold": round(thr, 4), "policy": policy,
+              "folds": len(folds(videos, n_folds)),
               "videos": len(videos), "reviewed": sum(v.source == "review" for v in videos),
               "train_sec": round(time.time() - started, 1)}
     cv["search"] = search

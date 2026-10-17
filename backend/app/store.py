@@ -94,6 +94,7 @@ class Store(Protocol):
     def add_version(self, version: dict[str, Any]) -> int: ...
     def versions(self) -> list[dict[str, Any]]: ...
     def activate_version(self, version_id: int) -> bool: ...
+    def purge(self, before: float) -> dict[str, list[str]]: ...
 
 
 def _summary(job: Any) -> dict[str, Any]:
@@ -191,6 +192,22 @@ class FileStore:
                 v["status"] = "retired"
         self._write_registry(data)
         return True
+
+    def purge(self, before: float) -> dict[str, list[str]]:
+        reviewed = set(self._registry()["reviews"])
+        out: dict[str, list[str]] = {"deleted": [], "stripped": []}
+        for job in self._all():
+            if job.created_at >= before or job.status not in ("done", "failed"):
+                continue
+            if job.id in reviewed:
+                for v in (job.result or {}).get("violations", []):
+                    v["evidence_frames"] = []
+                self.save(job)
+                out["stripped"].append(job.id)
+            else:
+                (self.dir / f"{job.id}.json").unlink(missing_ok=True)
+                out["deleted"].append(job.id)
+        return out
 
 
 class PgStore:
@@ -390,6 +407,30 @@ class PgStore:
             conn.execute("UPDATE model_versions SET status = 'retired' WHERE status = 'active'")
             conn.execute("UPDATE model_versions SET status = 'active' WHERE id = %s", (version_id,))
         return True
+
+    def purge(self, before: float) -> dict[str, list[str]]:
+        with self.pool.connection() as conn, conn.transaction():
+            frames = conn.execute(
+                """
+                DELETE FROM evidence_frames f USING violations v, jobs j
+                WHERE f.violation_id = v.id AND v.job_id = j.id AND j.created_at < to_timestamp(%s)
+                  AND j.status IN ('done', 'failed')
+                RETURNING j.id, f.path
+                """,
+                (before,),
+            ).fetchall()
+            deleted = [r[0] for r in conn.execute(
+                """
+                DELETE FROM jobs j WHERE j.created_at < to_timestamp(%s) AND j.status IN ('done', 'failed')
+                  AND NOT EXISTS (SELECT 1 FROM reviews r WHERE r.job_id = j.id)
+                RETURNING j.id
+                """,
+                (before,),
+            ).fetchall()]
+        for _, path in frames:
+            Path(path).unlink(missing_ok=True)
+        gone = set(deleted)
+        return {"deleted": deleted, "stripped": sorted({jid for jid, _ in frames} - gone)}
 
 
 def _json(value: Any) -> Any:

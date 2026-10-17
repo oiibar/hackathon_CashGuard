@@ -103,5 +103,1809 @@
    "accuracy": 0.0952
   }
  },
- "generated_at": 1792268318.5565913
+ "generated_at": 1792270502.6286817,
+ "per_video": [
+  {
+   "name": "X-1",
+   "label": "violation",
+   "label_t": 22.0,
+   "type": "cash_counting_hidden",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": false,
+    "times": [],
+    "types": [
+     "second_visitor_during_service"
+    ]
+   },
+   "system": {
+    "violation": false,
+    "times": [],
+    "types": [
+     "second_visitor_during_service"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 25.9,
+   "brightness": 139.1,
+   "sharpness": 635.6,
+   "mean_people": 2.04,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "X-2",
+   "label": "violation",
+   "label_t": 10.0,
+   "type": "cashier_uses_phone",
+   "rules": {
+    "violation": true,
+    "times": [
+     11.5
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     15.0
+    ],
+    "types": [
+     "cash_counting_hidden"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     11.5
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 17.1,
+   "brightness": 138.1,
+   "sharpness": 626.0,
+   "mean_people": 2.21,
+   "workplace_found": true,
+   "evidence": [
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 3,
+     "legal_basis": 1,
+     "quoted": true
+    }
+   ]
+  },
+  {
+   "name": "Х-10",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": false,
+    "times": [],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": false,
+    "times": [],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 15.6,
+   "brightness": 137.7,
+   "sharpness": 601.6,
+   "mean_people": 1.0,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-11",
+   "label": "violation",
+   "label_t": 18.0,
+   "type": "workplace_left_open",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     13.5
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     13.5
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 25.6,
+   "brightness": 119.6,
+   "sharpness": 672.3,
+   "mean_people": 0.92,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-12",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     24.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     24.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 42.3,
+   "brightness": 125.7,
+   "sharpness": 656.7,
+   "mean_people": 1.0,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-13",
+   "label": "violation",
+   "label_t": 47.0,
+   "type": "cash_to_pocket",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     39.0
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     39.0
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 65.3,
+   "brightness": 137.1,
+   "sharpness": 633.9,
+   "mean_people": 1.48,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-14",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": true,
+    "times": [
+     28.25,
+     35.25,
+     65.25,
+     91.0,
+     108.5,
+     112.75
+    ],
+    "types": [
+     "cashier_uses_phone",
+     "cashier_uses_phone",
+     "cashier_uses_phone",
+     "cashier_uses_phone",
+     "cashier_uses_phone",
+     "cashier_uses_phone"
+    ]
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     0.0
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     28.25,
+     35.25,
+     65.25,
+     91.0,
+     108.5,
+     112.75
+    ],
+    "types": [
+     "cashier_uses_phone",
+     "cashier_uses_phone",
+     "cashier_uses_phone",
+     "cashier_uses_phone",
+     "cashier_uses_phone",
+     "cashier_uses_phone"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 142.5,
+   "brightness": 138.9,
+   "sharpness": 644.1,
+   "mean_people": 1.23,
+   "workplace_found": true,
+   "evidence": [
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 2,
+     "legal_basis": 1,
+     "quoted": true
+    },
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 3,
+     "legal_basis": 1,
+     "quoted": true
+    },
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 2,
+     "legal_basis": 1,
+     "quoted": true
+    },
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 2,
+     "legal_basis": 1,
+     "quoted": true
+    },
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 3,
+     "legal_basis": 1,
+     "quoted": true
+    },
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 3,
+     "legal_basis": 1,
+     "quoted": true
+    }
+   ]
+  },
+  {
+   "name": "Х-15",
+   "label": "violation",
+   "label_t": 15.0,
+   "type": "cash_left_open",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     10.0
+    ],
+    "types": [
+     "workplace_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     10.0
+    ],
+    "types": [
+     "workplace_left_open"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 20.9,
+   "brightness": 136.2,
+   "sharpness": 622.8,
+   "mean_people": 0.92,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-16",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": false,
+    "times": [],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": false,
+    "times": [],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 22.7,
+   "brightness": 139.5,
+   "sharpness": 658.6,
+   "mean_people": 2.36,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-17",
+   "label": "violation",
+   "label_t": 7.0,
+   "type": "collection_bag_procedure",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     5.5
+    ],
+    "types": [
+     "second_visitor_during_service"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     5.5
+    ],
+    "types": [
+     "second_visitor_during_service"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 14.7,
+   "brightness": 137.7,
+   "sharpness": 678.9,
+   "mean_people": 1.8,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-18",
+   "label": "violation",
+   "label_t": 20.0,
+   "type": "second_visitor_during_service",
+   "rules": {
+    "violation": true,
+    "times": [
+     9.25,
+     16.5
+    ],
+    "types": [
+     "cashier_uses_phone",
+     "second_visitor_during_service"
+    ]
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     7.0
+    ],
+    "types": [
+     "cash_counting_hidden"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     9.25,
+     16.5
+    ],
+    "types": [
+     "cashier_uses_phone",
+     "second_visitor_during_service"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 22.6,
+   "brightness": 139.0,
+   "sharpness": 696.4,
+   "mean_people": 2.46,
+   "workplace_found": true,
+   "evidence": [
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 2,
+     "legal_basis": 1,
+     "quoted": true
+    },
+    {
+     "type_id": "second_visitor_during_service",
+     "frames": 2,
+     "legal_basis": 1,
+     "quoted": true
+    }
+   ]
+  },
+  {
+   "name": "Х-19",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": true,
+    "times": [
+     33.0
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     5.0
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     33.0
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 57.4,
+   "brightness": 143.3,
+   "sharpness": 677.3,
+   "mean_people": 2.2,
+   "workplace_found": true,
+   "evidence": [
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 2,
+     "legal_basis": 1,
+     "quoted": true
+    }
+   ]
+  },
+  {
+   "name": "Х-20",
+   "label": "violation",
+   "label_t": 5.0,
+   "type": "safe_left_open",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     0.0
+    ],
+    "types": [
+     "personal_items_in_cash_zone"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     0.0
+    ],
+    "types": [
+     "personal_items_in_cash_zone"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 11.6,
+   "brightness": 137.2,
+   "sharpness": 562.8,
+   "mean_people": 1.02,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-21",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     0.0
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     0.0
+    ],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 19.6,
+   "brightness": 138.2,
+   "sharpness": 556.2,
+   "mean_people": 1.0,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-22",
+   "label": "violation",
+   "label_t": 14.0,
+   "type": "workplace_left_open",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     9.5
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     9.5
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 21.0,
+   "brightness": 136.2,
+   "sharpness": 618.3,
+   "mean_people": 0.94,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-23",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     7.0
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     7.0
+    ],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 18.3,
+   "brightness": 136.0,
+   "sharpness": 627.3,
+   "mean_people": 0.92,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-24",
+   "label": "violation",
+   "label_t": 8.0,
+   "type": "workplace_left_open",
+   "rules": {
+    "violation": true,
+    "times": [
+     0.25
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     5.5
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     0.25
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 14.7,
+   "brightness": 141.0,
+   "sharpness": 683.1,
+   "mean_people": 0.86,
+   "workplace_found": true,
+   "evidence": [
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 2,
+     "legal_basis": 1,
+     "quoted": true
+    }
+   ]
+  },
+  {
+   "name": "Х-25",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     14.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     14.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 31.7,
+   "brightness": 140.3,
+   "sharpness": 649.1,
+   "mean_people": 0.97,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-26",
+   "label": "violation",
+   "label_t": 9.0,
+   "type": "cash_left_open",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     11.5
+    ],
+    "types": [
+     "workplace_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     11.5
+    ],
+    "types": [
+     "workplace_left_open"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 19.8,
+   "brightness": 140.6,
+   "sharpness": 651.6,
+   "mean_people": 0.89,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-27",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     10.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     10.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 26.4,
+   "brightness": 140.1,
+   "sharpness": 647.2,
+   "mean_people": 0.93,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-28",
+   "label": "violation",
+   "label_t": 7.0,
+   "type": "workplace_left_open",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     8.5
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     8.5
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 16.5,
+   "brightness": 140.3,
+   "sharpness": 670.3,
+   "mean_people": 0.92,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-29",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     7.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     7.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 17.3,
+   "brightness": 139.5,
+   "sharpness": 673.0,
+   "mean_people": 0.88,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-3",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": true,
+    "times": [
+     13.0
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     14.0
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     13.0
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 20.0,
+   "brightness": 141.9,
+   "sharpness": 626.8,
+   "mean_people": 2.04,
+   "workplace_found": true,
+   "evidence": [
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 3,
+     "legal_basis": 1,
+     "quoted": true
+    }
+   ]
+  },
+  {
+   "name": "Х-30",
+   "label": "violation",
+   "label_t": 13.0,
+   "type": "outsider_entered",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     4.0
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     4.0
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 18.8,
+   "brightness": 138.8,
+   "sharpness": 628.3,
+   "mean_people": 1.27,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-31",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     8.0
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     8.0
+    ],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 23.8,
+   "brightness": 137.2,
+   "sharpness": 625.2,
+   "mean_people": 1.01,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-32",
+   "label": "violation",
+   "label_t": 5.0,
+   "type": "cash_door_left_open",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     6.5
+    ],
+    "types": [
+     "outsider_entered"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     6.5
+    ],
+    "types": [
+     "outsider_entered"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 21.3,
+   "brightness": 136.7,
+   "sharpness": 632.9,
+   "mean_people": 0.89,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-33",
+   "label": "violation",
+   "label_t": 6.0,
+   "type": "outsider_entered",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     4.5
+    ],
+    "types": [
+     "cash_door_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     4.5
+    ],
+    "types": [
+     "cash_door_left_open"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 14.3,
+   "brightness": 135.6,
+   "sharpness": 616.5,
+   "mean_people": 1.21,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-34",
+   "label": "violation",
+   "label_t": 13.0,
+   "type": "client_left_before_count",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     4.0
+    ],
+    "types": [
+     "cash_to_pocket"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     4.0
+    ],
+    "types": [
+     "cash_to_pocket"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 17.7,
+   "brightness": 133.5,
+   "sharpness": 612.2,
+   "mean_people": 2.03,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-35",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     4.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     4.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 56.8,
+   "brightness": 134.7,
+   "sharpness": 611.3,
+   "mean_people": 2.03,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-37",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     4.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     4.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 15.9,
+   "brightness": 133.7,
+   "sharpness": 609.4,
+   "mean_people": 2.37,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-38",
+   "label": "violation",
+   "label_t": 33.0,
+   "type": "outsider_entered",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     10.5
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     10.5
+    ],
+    "types": [
+     "cash_left_open"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 59.0,
+   "brightness": 134.0,
+   "sharpness": 598.8,
+   "mean_people": 2.02,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-39",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     4.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     4.5
+    ],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 78.7,
+   "brightness": 133.3,
+   "sharpness": 609.3,
+   "mean_people": 1.95,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-4",
+   "label": "violation",
+   "label_t": 57.0,
+   "type": "cash_left_open",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     17.5
+    ],
+    "types": [
+     "outsider_entered"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     17.5
+    ],
+    "types": [
+     "outsider_entered"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 72.7,
+   "brightness": 136.2,
+   "sharpness": 640.1,
+   "mean_people": 2.18,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-40",
+   "label": "violation",
+   "label_t": 17.0,
+   "type": "personal_items_in_cash_zone",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     4.0
+    ],
+    "types": [
+     "safe_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     4.0
+    ],
+    "types": [
+     "safe_left_open"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 25.3,
+   "brightness": 136.6,
+   "sharpness": 621.5,
+   "mean_people": 0.96,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-43",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": false,
+    "times": [],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": false,
+    "times": [],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 23.4,
+   "brightness": 137.3,
+   "sharpness": 616.9,
+   "mean_people": 1.0,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-44",
+   "label": "violation",
+   "label_t": 16.0,
+   "type": "cash_counted_without_control",
+   "rules": {
+    "violation": true,
+    "times": [
+     15.25
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     6.5
+    ],
+    "types": [
+     "cash_door_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     15.25
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 20.4,
+   "brightness": 137.8,
+   "sharpness": 608.0,
+   "mean_people": 1.11,
+   "workplace_found": true,
+   "evidence": [
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 2,
+     "legal_basis": 1,
+     "quoted": true
+    }
+   ]
+  },
+  {
+   "name": "Х-45",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": true,
+    "times": [
+     23.75
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "model": {
+    "violation": false,
+    "times": [],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     23.75
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 33.3,
+   "brightness": 136.8,
+   "sharpness": 587.9,
+   "mean_people": 1.0,
+   "workplace_found": true,
+   "evidence": [
+    {
+     "type_id": "cashier_uses_phone",
+     "frames": 3,
+     "legal_basis": 1,
+     "quoted": true
+    }
+   ]
+  },
+  {
+   "name": "Х-46",
+   "label": "violation",
+   "label_t": 11.0,
+   "type": "personal_items_in_cash_zone",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     12.5
+    ],
+    "types": [
+     "cash_door_left_open"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     12.5
+    ],
+    "types": [
+     "cash_door_left_open"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 19.1,
+   "brightness": 139.0,
+   "sharpness": 610.4,
+   "mean_people": 1.01,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-47",
+   "label": "violation",
+   "label_t": 68.0,
+   "type": "cash_counting_hidden",
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     18.0
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     18.0
+    ],
+    "types": [
+     "cashier_uses_phone"
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 72.7,
+   "brightness": 136.2,
+   "sharpness": 640.1,
+   "mean_people": 2.18,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-48",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": false,
+    "times": [],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": false,
+    "times": [],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 71.6,
+   "brightness": 136.5,
+   "sharpness": 639.2,
+   "mean_people": 2.16,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-5",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": false,
+    "times": [],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": false,
+    "times": [],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 71.6,
+   "brightness": 136.5,
+   "sharpness": 639.2,
+   "mean_people": 2.16,
+   "workplace_found": true,
+   "evidence": []
+  },
+  {
+   "name": "Х-8",
+   "label": "no_violation",
+   "label_t": null,
+   "type": null,
+   "rules": {
+    "violation": false,
+    "times": [],
+    "types": []
+   },
+   "model": {
+    "violation": true,
+    "times": [
+     6.0
+    ],
+    "types": [
+     null
+    ]
+   },
+   "system": {
+    "violation": true,
+    "times": [
+     6.0
+    ],
+    "types": [
+     null
+    ]
+   },
+   "always": {
+    "violation": true,
+    "times": [],
+    "types": []
+   },
+   "duration_sec": 38.0,
+   "brightness": 139.1,
+   "sharpness": 636.6,
+   "mean_people": 1.0,
+   "workplace_found": true,
+   "evidence": []
+  }
+ ]
 }

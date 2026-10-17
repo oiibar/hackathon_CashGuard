@@ -51,11 +51,13 @@ class Settings:
     evidence_jpeg_quality: int = int(os.getenv("EVIDENCE_JPEG_QUALITY", "80"))
     max_violations_per_type: int = int(os.getenv("MAX_VIOLATIONS_PER_TYPE", "10"))
     store_jpeg_quality: int = int(os.getenv("STORE_JPEG_QUALITY", "85"))
+    retention_days: float = float(os.getenv("RETENTION_DAYS", "90"))
 
     learning_enabled: bool = _env_bool("LEARNING_ENABLED", "true")
     auto_retrain: bool = _env_bool("AUTO_RETRAIN", "true")
     retrain_min_reviews: int = int(os.getenv("RETRAIN_MIN_REVIEWS", "3"))
     cv_folds: int = int(os.getenv("CV_FOLDS", "10"))
+    threshold_policy: str = os.getenv("THRESHOLD_POLICY", "mcc")
 
     frontend_dist: Path = Path(os.getenv("FRONTEND_DIST", BACKEND_DIR.parent / "frontend" / "dist"))
 

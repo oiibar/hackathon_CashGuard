@@ -48,6 +48,7 @@ class Analyzer:
         self.sec_per_frame = self._benchmark()
         self.learned = learned.Model.load() if getattr(settings, "learned_enabled", True) else None
         self.embedder = None
+        self.timings: dict[str, float] = {}
         if self.learned is not None:
             from .embedder import Embedder, available
             if available():
@@ -129,9 +130,12 @@ class Analyzer:
             zones, localized, zone_info = inferred.zones, inferred.localized, inferred.info
             zone_info.setdefault("method", "auto")
 
+        t0 = time.time()
         zoomed = self._zoom_pass(obs, zones, localized, deadline, progress)
         scene = Scene(info, obs, zones, localized, zone_info, stopped_early, zoom_frames=zoomed)
+        t1 = time.time()
         self.embed(scene, deadline)
+        self.timings = {"zoom": round(t1 - t0, 2), "embed": round(time.time() - t1, 2)}
         return scene
 
     def embed(self, scene: Scene, deadline: float) -> None:
@@ -222,7 +226,9 @@ class Analyzer:
             progress: Callable[[float], None] | None = None, embeddings_out: Path | None = None) -> dict[str, Any]:
         started = time.time()
         info, obs, stopped = self.detect(video_path, deadline, progress)
+        detected = time.time()
         scene = self.prepare(info, obs, zones, deadline, stopped, progress)
+        prepared = time.time()
         if embeddings_out is not None and scene.emb_t is not None and len(scene.emb_t):
             try:
                 learned.save_embeddings(embeddings_out, scene.emb_t, scene.emb_full, scene.emb_desk)
@@ -230,6 +236,9 @@ class Analyzer:
                 log.exception("cannot save embeddings to %s", embeddings_out)
         report = self.judge(scene, started)
         report["meta"]["model_version"] = self.learned.meta.get("version") if self.learned else None
+        report["meta"]["timings"] = {"detect": round(detected - started, 2), **self.timings,
+                                     "scene": round(prepared - detected - sum(self.timings.values()), 2),
+                                     "judge": round(time.time() - prepared, 2)}
         return report
 
     def _merge_learned(self, scene: Scene, violations: list[dict[str, Any]],
@@ -265,7 +274,7 @@ class Analyzer:
                 "timecode_sec": round(ep.start, 2),
                 "end_sec": round(ep.end, 2),
                 "duration_sec": round(ep.end - ep.start, 2),
-                "confidence": round(ep.score, 3),
+                "confidence": round(self.learned.confidence(ep.score), 3),
                 "severity": rule.get("severity", "medium"),
                 "source": "learned",
                 "description": description,

@@ -44,6 +44,7 @@ def main() -> int:
     ap.add_argument("--types", type=Path, default=ROOT / "ml" / "violation_types.csv")
     ap.add_argument("--cache", type=Path, default=ROOT / "ml" / "cache")
     ap.add_argument("--folds", type=int, default=10, help="grouped CV folds; 0 = leave-one-video-out")
+    ap.add_argument("--policy", choices=("mcc", "cost"), default="mcc", help="threshold: best MCC or lowest error cost")
     ap.add_argument("--cv-only", action="store_true")
     args = ap.parse_args()
 
@@ -58,7 +59,7 @@ def main() -> int:
         ts = float(row["timestamp_sec"]) if row["timestamp_sec"] else None
         videos.append(Video(name, t, full, desk, row["label"], ts, types.get(name)))
 
-    result = train(videos, n_folds=args.folds)
+    result = train(videos, n_folds=args.folds, policy=args.policy)
     m = result.metrics
     print(f"\nselected k={result.params['k']} C={result.params['c']} threshold={result.params['threshold']}")
     print(f"accuracy {m['tp'] + m['tn']}/{m['videos']}  recall {m['tp']}/{m['positives']}  "

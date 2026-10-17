@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import shutil
 import logging
 import time
 import uuid
@@ -66,6 +67,8 @@ class JobManager:
         await asyncio.to_thread(self._restore)
         for i, analyzer in enumerate(analyzers):
             self._workers.append(asyncio.create_task(self._worker(i, analyzer), name=f"worker-{i}"))
+        if settings.retention_days > 0:
+            self._workers.append(asyncio.create_task(self._janitor(), name="janitor"))
 
     async def stop(self) -> None:
         for w in self._workers:
@@ -76,6 +79,25 @@ class JobManager:
 
     def busy(self) -> bool:
         return bool(self.active)
+
+    async def _janitor(self, every_sec: float = 6 * 3600) -> None:
+        while True:
+            try:
+                await asyncio.to_thread(self.purge)
+            except Exception:
+                log.exception("retention purge failed")
+            await asyncio.sleep(every_sec)
+
+    def purge(self, now: float | None = None) -> dict[str, list[str]]:
+        before = (now or time.time()) - settings.retention_days * 86400
+        out = self.store.purge(before)
+        for job_id in out["deleted"]:
+            shutil.rmtree(settings.data_dir / "evidence" / job_id, ignore_errors=True)
+            embeddings_path(job_id).unlink(missing_ok=True)
+        if out["deleted"] or out["stripped"]:
+            log.info("retention: deleted %d job(s), removed evidence of %d reviewed job(s)",
+                     len(out["deleted"]), len(out["stripped"]))
+        return out
 
     def _restore(self) -> None:
         for job in self.store.unfinished():

@@ -101,9 +101,19 @@ def main() -> int:
         both = {"violation": rule["violation"] or model["violation"], "times": rule["times"] or model["times"],
                 "types": rule["types"] if rule["violation"] else model["types"]}
         label, label_t = labels[video.stem]
+        people = [sum(d.cls == "person" for d in o.dets) for o in scene.obs]
         rows.append({"name": video.stem, "label": label, "label_t": label_t, "type": types.get(video.stem),
                      "rules": rule, "model": model, "system": both,
-                     "always": {"violation": True, "times": [], "types": []}})
+                     "always": {"violation": True, "times": [], "types": []},
+                     "duration_sec": round(scene.info.duration_sec, 1),
+                     "brightness": round(float(np.mean([o.brightness for o in scene.obs])), 1),
+                     "sharpness": round(float(np.median([o.sharpness for o in scene.obs])), 1),
+                     "mean_people": round(float(np.mean(people)), 2),
+                     "workplace_found": bool(scene.localized),
+                     "evidence": [{"type_id": v["type_id"], "frames": len(v["evidence_frames"]),
+                                   "legal_basis": len(v.get("legal_basis", [])),
+                                   "quoted": all(b.get("quote") and b.get("url") for b in v.get("legal_basis", []))}
+                                  for v in found]})
         mark = "  " if both["violation"] == (label == "violation") else "XX"
         print(f"{mark}{video.stem:<6} {label:<13} {label_t if label_t is not None else '':>5}  "
               f"rules={'+' if rule['violation'] else '-'} model={'+' if model['violation'] else '-'}  "
@@ -111,6 +121,7 @@ def main() -> int:
 
     out = {name: summarize(rows, name) for name in ("always", "rules", "model", "system")}
     out["generated_at"] = time.time()
+    out["per_video"] = rows
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     for name in ("always", "rules", "model", "system"):
         s = out[name]

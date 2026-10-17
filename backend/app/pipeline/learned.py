@@ -77,6 +77,7 @@ class Model:
     proto: np.ndarray
     proto_types: list[str]
     meta: dict[str, Any] = field(default_factory=dict)
+    calib: tuple[float, float] | None = None
 
     @classmethod
     def load(cls, path: Path = MODEL_PATH) -> "Model | None":
@@ -84,8 +85,9 @@ class Model:
             return None
         z = np.load(path, allow_pickle=False)
         meta = json.loads(str(z["meta"])) if "meta" in z.files else {}
+        calib = tuple(float(v) for v in z["calib"]) if "calib" in z.files else None
         return cls(z["mean"], z["scale"], z["pca_mean"], z["pca"], z["coef"], float(z["intercept"]),
-                   float(z["threshold"]), z["proto"], [str(s) for s in z["proto_types"]], meta)
+                   float(z["threshold"]), z["proto"], [str(s) for s in z["proto_types"]], meta, calib)
 
     def save(self, path: Path) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -93,7 +95,8 @@ class Model:
         np.savez(tmp, mean=self.mean, scale=self.scale, pca_mean=self.pca_mean, pca=self.pca, coef=self.coef,
                  intercept=np.float32(self.intercept), threshold=np.float32(self.threshold),
                  proto=self.proto.astype(np.float32), proto_types=np.array(self.proto_types, dtype=str),
-                 meta=np.array(json.dumps(self.meta, ensure_ascii=False)))
+                 meta=np.array(json.dumps(self.meta, ensure_ascii=False)),
+                 **({"calib": np.array(self.calib, np.float32)} if self.calib else {}))
         tmp.replace(path)
 
     def project(self, x: np.ndarray) -> np.ndarray:
@@ -102,6 +105,12 @@ class Model:
     def score(self, x: np.ndarray) -> np.ndarray:
         z = self.project(x) @ self.coef + self.intercept
         return 1 / (1 + np.exp(-z))
+
+    def confidence(self, score: float) -> float:
+        if self.calib is None:
+            return float(score)
+        a, b = self.calib
+        return float(1 / (1 + np.exp(-(a * score + b))))
 
     def type_of(self, x: np.ndarray) -> str:
         p = self.project(x[None])[0]

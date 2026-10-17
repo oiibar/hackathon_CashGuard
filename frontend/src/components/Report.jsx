@@ -175,6 +175,9 @@ function TechDetails({ job }) {
       <ul className="tech-list">
         <li>{meta.frames_analyzed} {t('frames')} · {meta.sample_fps} {t('fps')} · {t('procTime')} {meta.processing_time_sec} s</li>
         <li>{z.method === 'manual' ? t('zoneManualMeta') : z.localized ? t('zoneFound') : t('zoneNotFound')}</li>
+        {meta.timings && (
+          <li>{Object.entries(meta.timings).map(([k, v]) => `${k} ${v} s`).join(' · ')}</li>
+        )}
         {meta.models && <li>{meta.models.join(', ')}</li>}
         {meta.skipped_rules?.length > 0 && (
           <li>{t('skipped')}: {meta.skipped_rules.map((s) => s.type).join(', ')}</li>

@@ -116,7 +116,7 @@ class Learner:
         with self._lock:
             videos, fresh = self._videos()
             log.info("retraining on %d videos (%d new reviews)", len(videos), len(fresh))
-            result = train(videos, n_folds=settings.cv_folds, log=log.info)
+            result = train(videos, n_folds=settings.cv_folds, log=log.info, policy=settings.threshold_policy)
             accepted, decision = self._gate(result, [v for _, v in fresh])
             n = max((v["id"] for v in self.store.versions()), default=0) + 1
             path = settings.data_dir / "models" / f"violation_clf_v{n}.npz"
@@ -179,12 +179,13 @@ class Learner:
                      "params": base.get("params", {}), "metrics": _short(base.get("metrics", {}))})
         current = self.model.meta if self.model else {}
         reviews = self.store.reviews() if self.store else []
-        system = MODEL_PATH.parent / "system_metrics.json"
+        path = MODEL_PATH.parent / "system_metrics.json"
+        system = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
         return {
-            "system": json.loads(system.read_text(encoding="utf-8")) if system.exists() else None,
+            "system": {k: v for k, v in system.items() if k != "per_video"} if system else None,
             "active_version": self.version,
             "params": current.get("params", {}),
-            "metrics": {k: v for k, v in current.get("metrics", {}).items() if k != "per_video"},
+            "metrics": {k: v for k, v in current.get("metrics", {}).items() if k not in ("per_video", "operating_points")},
             "versions": rows,
             "learning": {
                 "enabled": self.enabled,
